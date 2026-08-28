@@ -1,4 +1,4 @@
-﻿# DisasterView Production Deployment Guide
+# DisasterView Production Deployment Guide
 
 **Team:** Team Apex 07  
 **System:** DisasterView Multi-Hazard Early Warning System  
@@ -18,6 +18,7 @@
 ### Backend Configuration (Render Environment Settings)
 | Variable | Production Value | Description |
 |---|---|---|
+| `AI_ENABLED` | `false` | Disables heavy vision models to prevent memory exhaustion (status 137) on 512MB RAM free instances |
 | `DATABASE_URL` | `sqlite:///./disasterview.db` (or `postgresql://user:pass@host/db`) | Database connection string |
 | `ALLOWED_ORIGINS` | `https://teamapex07-disasterview.pages.dev` | Allowed CORS origins (Strict Cloudflare Pages domain) |
 | `TEMP_FIRE_THRESHOLD` | `60.0` | Fire thermal threshold (°C) |

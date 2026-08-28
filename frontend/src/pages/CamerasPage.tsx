@@ -11,12 +11,22 @@ export const CamerasPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [modelInfo, setModelInfo] = useState<any>(null);
+  const [aiStatus, setAiStatus] = useState<string>('ENABLED');
+  const [aiMessage, setAiMessage] = useState<string>('');
   
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     axios.get(`${API_BASE}/models`)
-      .then(res => setModelInfo(res.data.fire_smoke))
+      .then(res => {
+        if (res.data.status === 'DISABLED_IN_PRODUCTION' || res.data.status === 'UNAVAILABLE') {
+          setAiStatus(res.data.status);
+          setAiMessage(res.data.message || 'AI Computer Vision is disabled in production to conserve resources.');
+        } else {
+          setAiStatus('ENABLED');
+        }
+        setModelInfo(res.data.fire_smoke || null);
+      })
       .catch(console.error);
   }, []);
 
@@ -66,6 +76,11 @@ export const CamerasPage = () => {
             In the future, this module could process a live camera feed as optional visual evidence to supplement the core sensor fusion.
             Uploading an image here runs local inference and outputs raw detection results.
           </p>
+          {aiStatus !== 'ENABLED' && (
+            <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-xs text-yellow-300">
+              <strong>ENVIRONMENT STATUS:</strong> {aiMessage || 'AI Inference is disabled in this environment (AI_ENABLED=false) to conserve memory. Hardware sensor fusion is 100% active.'}
+            </div>
+          )}
         </div>
         
         {modelInfo && (

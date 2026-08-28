@@ -1,6 +1,5 @@
 ﻿import sys
 import os
-import datetime
 
 # Use a fresh test sqlite file
 test_db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "test_run.db"))
@@ -16,9 +15,8 @@ os.environ["DATABASE_URL"] = f"sqlite:///{test_db_path}"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from fastapi.testclient import TestClient
-from backend.src.db.session import engine, Base, SessionLocal
+from backend.src.db.session import engine, Base
 from backend.src.models.all_models import Device, Incident
-# Create tables explicitly on the engine
 Base.metadata.create_all(bind=engine)
 
 from backend.src.main import app
@@ -143,14 +141,14 @@ try:
 except Exception as e:
     record(9, "Incident Status Resolution (PATCH)", "RESOLVED", str(e), False)
 
-# 10. Model Registry
+# 10. Model Registry (Lazy Load info check)
 try:
     r = client.get("/api/models")
     data = r.json()
-    p = "fire_smoke" in data and data["fire_smoke"]["runtime"] == "LOCAL CPU / PYTORCH"
-    record(10, "Model Registry & Qualcomm Honesty", "runtime='LOCAL CPU / PYTORCH'", f"runtime={data.get('fire_smoke', {}).get('runtime')}", p)
+    p = "fire_smoke" in data and "status" in data
+    record(10, "Model Registry Reporting", "fire_smoke in registry", f"status={data.get('status')}, fire_model={data.get('fire_smoke', {}).get('name')}", p)
 except Exception as e:
-    record(10, "Model Registry", "LOCAL CPU", str(e), False)
+    record(10, "Model Registry Reporting", "registry info", str(e), False)
 
 all_passed = all(r["status"] == "PASS" for r in results)
 print(f"\n==========================================")

@@ -259,40 +259,56 @@ async def update_incident_status(incident_id: str, payload: IncidentStatusUpdate
     await manager.broadcast('{"type": "INCIDENT_UPDATED", "id": "' + incident_id + '", "status": "' + payload.status + '"}')
     return incident
 
-# --- AI INFERENCE ENGINE INTEGRATION (STANDALONE DEMO MODULE) ---
-sys.path.append(os.path.join(os.path.dirname(__file__), "../../../"))
-try:
-    from ai.inference import EdgeAIInferencer
-    ai_inferencer = EdgeAIInferencer()
-except Exception as e:
-    ai_inferencer = None
+# --- AI INFERENCE ENGINE INTEGRATION (STANDALONE DEMO MODULE - LAZY LOADED) ---
+_ai_inferencer_instance = None
+
+def get_ai_inferencer():
+    global _ai_inferencer_instance
+    if _ai_inferencer_instance is None:
+        sys.path.append(os.path.join(os.path.dirname(__file__), "../../../"))
+        try:
+            from ai.inference import EdgeAIInferencer
+            _ai_inferencer_instance = EdgeAIInferencer()
+        except Exception as e:
+            _ai_inferencer_instance = None
+    return _ai_inferencer_instance
 
 @router.get("/api/models")
 def get_model_registry():
-    if not ai_inferencer:
+    inferencer = get_ai_inferencer()
+    if not inferencer:
         return {
+            "status": "UNAVAILABLE",
+            "message": "AI Inferencer module not available.",
             "fire_smoke": {
                 "name": "MISSING WEIGHTS",
                 "runtime": "LOCAL CPU / PYTORCH",
+                "status": "UNAVAILABLE",
                 "expected_classes": []
             },
             "flood": {
                 "name": "MISSING WEIGHTS (NO FAKE AI)",
                 "runtime": "LOCAL CPU / PYTORCH",
+                "status": "UNAVAILABLE",
                 "expected_classes": ["NOT CONFIGURED"]
             }
         }
-    return ai_inferencer.get_model_info()
+    return inferencer.get_model_info()
 
 @router.post("/api/inference")
 async def run_inference(file: UploadFile = File(...)):
-    if not ai_inferencer:
-        return {"error": "AI Inferencer not loaded.", "detections": []}
+    inferencer = get_ai_inferencer()
+    if not inferencer:
+        return {
+            "error": "AI Inferencer is disabled or unavailable in this environment.",
+            "detections": [],
+            "inference_time_ms": 0.0
+        }
     
     image_bytes = await file.read()
-    results = ai_inferencer.infer_image(image_bytes)
+    results = inferencer.infer_image(image_bytes)
     
-    # Broadcast high-confidence software detection demonstration
+    # Broadcast high-confidence software detection demonstration if any
     for det in results.get("detections", []):
         if det.get("confidence", 0) > 0.5:
             await manager.broadcast('{"type": "NEW_AI_DETECTION", "data": "' + f'{det["class"].upper()}' + '"}')
