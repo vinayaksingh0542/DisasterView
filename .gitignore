@@ -1,0 +1,36 @@
+﻿# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Databases & local run logs
+*.db
+backend/test_run.db
+backend/disasterview.db
+backend_err.txt
+backend_log.txt
+
+# Node & Frontend Build
+node_modules/
+dist/
+.vite/
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.production
+*.pem
+*.key

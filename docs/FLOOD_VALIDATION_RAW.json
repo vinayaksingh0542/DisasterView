@@ -1,0 +1,89 @@
+{
+  "metrics": {
+    "total_images": 10,
+    "flood_true_positives": 1,
+    "flood_false_positives": 0,
+    "flood_false_negatives": 5,
+    "inference_times": [
+      5970.29,
+      2737.7,
+      2592.59,
+      2695.63,
+      2413.23,
+      2696.04,
+      1726.97,
+      1883.37,
+      1448.69,
+      1423.42
+    ],
+    "avg_inference_time_ms": 2558.793,
+    "median_inference_time_ms": 2592.59,
+    "p95_inference_time_ms": 5970.29,
+    "flood_precision": 1.0,
+    "flood_recall": 0.16666666666666666
+  },
+  "results": [
+    {
+      "image": "FLOOD/0.jpg",
+      "expected": "FLOOD",
+      "detected": [],
+      "time_ms": 5970.29
+    },
+    {
+      "image": "FLOOD/1.jpg",
+      "expected": "FLOOD",
+      "detected": [],
+      "time_ms": 2737.7
+    },
+    {
+      "image": "FLOOD/2.jpg",
+      "expected": "FLOOD",
+      "detected": [],
+      "time_ms": 2592.59
+    },
+    {
+      "image": "FLOOD/3.jpg",
+      "expected": "FLOOD",
+      "detected": [],
+      "time_ms": 2695.63
+    },
+    {
+      "image": "FLOOD/4.jpg",
+      "expected": "FLOOD",
+      "detected": [
+        "FLOOD"
+      ],
+      "time_ms": 2413.23
+    },
+    {
+      "image": "FLOOD/5.jpg",
+      "expected": "FLOOD",
+      "detected": [],
+      "time_ms": 2696.04
+    },
+    {
+      "image": "NORMAL/0.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 1726.97
+    },
+    {
+      "image": "NORMAL/1.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 1883.37
+    },
+    {
+      "image": "NORMAL/2.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 1448.69
+    },
+    {
+      "image": "NORMAL/3.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 1423.42
+    }
+  ]
+}

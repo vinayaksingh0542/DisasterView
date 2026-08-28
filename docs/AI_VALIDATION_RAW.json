@@ -1,0 +1,146 @@
+{
+  "metrics": {
+    "total_images": 15,
+    "fire_true_positives": 2,
+    "fire_false_positives": 0,
+    "fire_false_negatives": 5,
+    "smoke_true_positives": 5,
+    "smoke_false_positives": 1,
+    "smoke_false_negatives": 2,
+    "inference_times": [
+      1165.52,
+      742.53,
+      973.72,
+      995.4,
+      691.44,
+      854.54,
+      1071.9,
+      626.14,
+      705.78,
+      688.92,
+      689.53,
+      601.01,
+      679.98,
+      1195.76,
+      826.71
+    ],
+    "avg_inference_time_ms": 833.9253333333332,
+    "median_inference_time_ms": 742.53,
+    "p95_inference_time_ms": 1195.76,
+    "fire_precision": 1.0,
+    "fire_recall": 0.2857142857142857,
+    "smoke_precision": 0.8333333333333334,
+    "smoke_recall": 0.7142857142857143
+  },
+  "results": [
+    {
+      "image": "FIRE/0.jpg",
+      "expected": "FIRE",
+      "detected": [
+        "FIRE"
+      ],
+      "time_ms": 1165.52
+    },
+    {
+      "image": "FIRE/1.jpg",
+      "expected": "FIRE",
+      "detected": [
+        "FIRE",
+        "SMOKE",
+        "FIRE",
+        "SMOKE"
+      ],
+      "time_ms": 742.53
+    },
+    {
+      "image": "FIRE/2.jpg",
+      "expected": "FIRE",
+      "detected": [],
+      "time_ms": 973.72
+    },
+    {
+      "image": "FIRE/3.jpg",
+      "expected": "FIRE",
+      "detected": [],
+      "time_ms": 995.4
+    },
+    {
+      "image": "FIRE/4.jpg",
+      "expected": "FIRE",
+      "detected": [],
+      "time_ms": 691.44
+    },
+    {
+      "image": "FIRE/5.jpg",
+      "expected": "FIRE",
+      "detected": [
+        "SMOKE",
+        "SMOKE"
+      ],
+      "time_ms": 854.54
+    },
+    {
+      "image": "FIRE/6.jpg",
+      "expected": "FIRE",
+      "detected": [
+        "SMOKE"
+      ],
+      "time_ms": 1071.9
+    },
+    {
+      "image": "SMOKE/0.jpg",
+      "expected": "SMOKE",
+      "detected": [],
+      "time_ms": 626.14
+    },
+    {
+      "image": "SMOKE/1.jpg",
+      "expected": "SMOKE",
+      "detected": [
+        "SMOKE"
+      ],
+      "time_ms": 705.78
+    },
+    {
+      "image": "SMOKE/2.jpg",
+      "expected": "SMOKE",
+      "detected": [],
+      "time_ms": 688.92
+    },
+    {
+      "image": "SMOKE/3.jpg",
+      "expected": "SMOKE",
+      "detected": [
+        "SMOKE",
+        "SMOKE"
+      ],
+      "time_ms": 689.53
+    },
+    {
+      "image": "NORMAL/0.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 601.01
+    },
+    {
+      "image": "NORMAL/1.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 679.98
+    },
+    {
+      "image": "NORMAL/2.jpg",
+      "expected": "NORMAL",
+      "detected": [],
+      "time_ms": 1195.76
+    },
+    {
+      "image": "NORMAL/3.jpg",
+      "expected": "NORMAL",
+      "detected": [
+        "SMOKE"
+      ],
+      "time_ms": 826.71
+    }
+  ]
+}
