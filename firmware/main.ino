@@ -3,8 +3,8 @@
 #include <DHT.h>
 
 // Networking
-const char* ssid = "YOUR_SSID";
-const char* password = "YOUR_PASSWORD";
+const char* ssid = "Shreyas patil";
+const char* password = "shree123";
 const char* serverUrl = "http://YOUR_BACKEND_IP:8000/api/sensors";
 
 // Device Info
