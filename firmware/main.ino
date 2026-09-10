@@ -8,7 +8,7 @@ const char* password = "YOUR_PASSWORD";
 const char* serverUrl = "http://YOUR_BACKEND_IP:8000/api/sensors";
 
 // Device Info
-const String deviceId = "esp32-node-001";
+const String deviceId = "d742baa0-5366-4f94-bd4b-a19daf78f88d";
 
 // Pins
 #define DHTPIN 4
