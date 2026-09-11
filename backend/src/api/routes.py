@@ -139,8 +139,13 @@ async def receive_sensor_data(data: SensorData, db: Session = Depends(get_db)):
         fire_evidence.append("Flame IR Sensor: TRIGGERED (Active Flame)")
     if data.temperature is not None and data.temperature > TEMP_FIRE_THRESHOLD:
         fire_evidence.append(f"DHT22 Temperature: {data.temperature:.1f}°C (Threshold: >{TEMP_FIRE_THRESHOLD}°C)")
+    if (data.flame_detected or
+    (data.temperature is not None and data.temperature > TEMP_FIRE_THRESHOLD)):
     if data.mq9_gas_level is not None and data.mq9_gas_level > MQ9_FIRE_THRESHOLD:
-        fire_evidence.append(f"MQ-9 Combustible Gas Level: {data.mq9_gas_level:.0f} (Threshold: >{MQ9_FIRE_THRESHOLD})")
+        fire_evidence.append(
+            f"MQ-9 Combustible Gas Level: {data.mq9_gas_level:.0f} "
+            f"(Threshold: >{MQ9_FIRE_THRESHOLD})"
+        )
     
     if len(fire_evidence) > 0:
         if not has_recent_incident("FIRE"):
