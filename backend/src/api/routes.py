@@ -381,16 +381,22 @@ async def receive_sensor_data(
     # MQ-9 co-presence evidence for smoke
     # -------------------------------------------------------------------------
 # MQ-9 acts only as corroborating evidence when MQ-135 already detects smoke
-if (
-    data.mq135_air_quality is not None
-    and data.mq135_air_quality > MQ135_SMOKE_THRESHOLD
-    and data.mq9_gas_level is not None
-    and data.mq9_gas_level > 200.0
-):
-    smoke_evidence.append(
-        f"MQ-9 Gas Co-presence: "
-        f"{data.mq9_gas_level:.0f}"
-    )
+    # -------------------------------------------------------------------------
+    # MQ-9 co-presence evidence for smoke
+    # -------------------------------------------------------------------------
+
+    # MQ-9 acts only as corroborating evidence when MQ-135 already detects smoke
+    if (
+        data.mq135_air_quality is not None
+        and data.mq135_air_quality > MQ135_SMOKE_THRESHOLD
+        and data.mq9_gas_level is not None
+        and data.mq9_gas_level > 200.0
+    ):
+
+        smoke_evidence.append(
+            f"MQ-9 Gas Co-presence: "
+            f"{data.mq9_gas_level:.0f}"
+        )
 
     # -------------------------------------------------------------------------
     # Create SMOKE incident only when no fire evidence exists
