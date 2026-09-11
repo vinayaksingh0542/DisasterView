@@ -84,7 +84,7 @@ class SensorData(BaseModel):
 
 # Configurable Engineering Thresholds (Sensor Fusion Rules)
 TEMP_FIRE_THRESHOLD = float(os.getenv("TEMP_FIRE_THRESHOLD", "60.0"))
-MQ9_FIRE_THRESHOLD = float(os.getenv("MQ9_FIRE_THRESHOLD", "300.0"))
+MQ9_FIRE_THRESHOLD = float(os.getenv("MQ9_FIRE_THRESHOLD", "2000.0"))
 MQ135_SMOKE_THRESHOLD = float(os.getenv("MQ135_SMOKE_THRESHOLD", "400.0"))
 FLOOD_CRITICAL_DIST = float(os.getenv("FLOOD_CRITICAL_DIST", "20.0"))
 FLOOD_HIGH_DIST = float(os.getenv("FLOOD_HIGH_DIST", "50.0"))
