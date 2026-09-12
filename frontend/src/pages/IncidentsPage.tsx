@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { AlertCircle, Check, XCircle } from 'lucide-react';
+import { AlertCircle, XCircle } from 'lucide-react';
 import { API_BASE } from '../config/api';
 
 export const IncidentsPage = () => {
@@ -20,6 +20,7 @@ export const IncidentsPage = () => {
   const updateIncident = async (id: string, status: string) => {
     try {
       await axios.patch(`${API_BASE}/incidents/${id}`, { status });
+
       setIncidents(
         incidents.map(i =>
           i.id === id ? { ...i, status } : i
@@ -30,9 +31,33 @@ export const IncidentsPage = () => {
     }
   };
 
+  // Convert backend UTC timestamp to IST
+  const formatISTTime = (timestamp: string) => {
+    if (!timestamp) return 'N/A';
+
+    try {
+      // Backend currently sends UTC without a timezone suffix.
+      // Add Z so JavaScript correctly interprets it as UTC.
+      const utcTimestamp = timestamp.endsWith('Z')
+        ? timestamp
+        : `${timestamp}Z`;
+
+      return new Date(utcTimestamp).toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        dateStyle: 'medium',
+        timeStyle: 'medium',
+      });
+    } catch (error) {
+      console.error('Invalid incident timestamp:', timestamp);
+      return 'Invalid time';
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Incident Management</h1>
+      <h1 className="text-3xl font-bold">
+        Incident Management
+      </h1>
 
       <div className="bg-surface border border-gray-800 rounded-xl overflow-hidden p-6">
         <table className="w-full text-left">
@@ -42,7 +67,9 @@ export const IncidentsPage = () => {
               <th className="pb-3 font-medium">Type</th>
               <th className="pb-3 font-medium">Severity</th>
               <th className="pb-3 font-medium">Evidence Score</th>
-              <th className="pb-3 font-medium">Description & Evidence</th>
+              <th className="pb-3 font-medium">
+                Description & Evidence
+              </th>
               <th className="pb-3 font-medium">Status</th>
               <th className="pb-3 font-medium">Action</th>
             </tr>
@@ -51,36 +78,38 @@ export const IncidentsPage = () => {
           <tbody className="divide-y divide-gray-800">
             {incidents.map((inc) => (
               <tr key={inc.id}>
-                
-                {/* IST TIME DISPLAY */}
+
+                {/* INCIDENT TIME — UTC converted to IST */}
                 <td className="py-4 text-sm">
-                  {new Date(inc.created_at).toLocaleString('en-IN', {
-                    timeZone: 'Asia/Kolkata',
-                    dateStyle: 'medium',
-                    timeStyle: 'medium',
-                  })}
+                  {formatISTTime(inc.created_at)}
                 </td>
 
+                {/* INCIDENT TYPE */}
                 <td className="py-4">
                   <span
                     className={`px-2 py-1 rounded text-xs font-bold bg-opacity-20 ${
                       inc.type === 'FIRE'
                         ? 'text-red-400 bg-red-400'
-                        : 'text-blue-400 bg-blue-400'
+                        : inc.type === 'FLOOD'
+                        ? 'text-blue-400 bg-blue-400'
+                        : 'text-yellow-400 bg-yellow-400'
                     }`}
                   >
                     {inc.type}
                   </span>
                 </td>
 
+                {/* SEVERITY */}
                 <td className="py-4 text-sm font-bold text-gray-300">
                   {inc.severity}
                 </td>
 
+                {/* EVIDENCE SCORE */}
                 <td className="py-4 text-sm font-bold text-white">
                   {inc.evidence_score || 'N/A'}
                 </td>
 
+                {/* DESCRIPTION & SENSOR EVIDENCE */}
                 <td className="py-4 text-sm max-w-xs">
                   <p>{inc.description}</p>
 
@@ -92,6 +121,7 @@ export const IncidentsPage = () => {
                   )}
                 </td>
 
+                {/* STATUS */}
                 <td className="py-4">
                   <span
                     className={`px-2 py-1 rounded text-xs ${
@@ -104,6 +134,7 @@ export const IncidentsPage = () => {
                   </span>
                 </td>
 
+                {/* ACTIONS */}
                 <td className="py-4">
                   {inc.status !== 'RESOLVED' && (
                     <button
@@ -131,6 +162,7 @@ export const IncidentsPage = () => {
               </tr>
             ))}
 
+            {/* NO INCIDENTS */}
             {incidents.length === 0 && (
               <tr>
                 <td
