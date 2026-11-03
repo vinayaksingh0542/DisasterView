@@ -1,14 +1,22 @@
+
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { ShieldAlert, Map, Activity, Camera, Settings, LayoutDashboard, Radio } from 'lucide-react';
+import {
+  ShieldAlert,
+  Map,
+  Activity,
+  Camera,
+  Settings,
+  LayoutDashboard
+} from 'lucide-react';
 
 const Sidebar = () => {
   const location = useLocation();
+
   const links = [
     { name: 'Command Center', path: '/', icon: <LayoutDashboard size={20} /> },
     { name: 'Live Map', path: '/map', icon: <Map size={20} /> },
     { name: 'Incidents', path: '/incidents', icon: <ShieldAlert size={20} /> },
-    { name: 'Hardware / Edge', path: '/devices', icon: <Radio size={20} /> },
     { name: 'AI / Vision Demo', path: '/cameras', icon: <Camera size={20} /> },
     { name: 'Analytics', path: '/analytics', icon: <Activity size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
@@ -20,13 +28,16 @@ const Sidebar = () => {
         <ShieldAlert className="text-primary" size={28} />
         <span className="text-xl font-bold tracking-wider">DISASTERVIEW</span>
       </div>
+
       <nav className="flex-1 px-4 py-6 space-y-2">
         {links.map((link) => (
           <Link
             key={link.path}
             to={link.path}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-              location.pathname === link.path ? 'bg-primary/10 text-primary' : 'hover:bg-gray-800 text-gray-400 hover:text-white'
+              location.pathname === link.path
+                ? 'bg-primary/10 text-primary'
+                : 'hover:bg-gray-800 text-gray-400 hover:text-white'
             }`}
           >
             {link.icon}
@@ -34,6 +45,7 @@ const Sidebar = () => {
           </Link>
         ))}
       </nav>
+
       <div className="p-4 border-t border-gray-800 text-xs text-gray-500">
         System Status: <span className="text-safe font-bold">ONLINE</span>
       </div>
