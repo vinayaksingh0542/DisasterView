@@ -1,15 +1,11 @@
-// Production & Development API Configuration for Team Apex 07 DisasterView
-const isProd = import.meta.env.PROD;
- 
-export const API_BASE =
-  import.meta.env.VITE_API_BASE ||
-  (isProd
-    ? 'https://disasterview.onrender.com/api'
-    : 'http://localhost:8000/api');
- 
-export const WS_BASE = import.meta.env.VITE_WS_BASE || (
-  isProd
-    ? 'wss://disasterview-8dvy.onrender.com/ws'
-    : 'ws://localhost:8000/ws'
-);
 
+// DisasterView API Configuration
+// Team Apex 07
+
+// Backend REST API (same Render server used by ESP32)
+export const API_BASE =
+  'https://disasterview-j28w.onrender.com/api';
+
+// Backend WebSocket (same Render server)
+export const WS_BASE =
+  'wss://disasterview-j28w.onrender.com/ws';
